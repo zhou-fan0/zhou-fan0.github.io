@@ -1,9 +1,148 @@
-<htmL>
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+
+           #panel {
+                border: 1px solid #000000;
+                width: 300px;
+                height: 500px;                
+                background-color: black; 
+                margin: auto;
+                padding: 10px;               
+            }
+            #keyboard {
+                border: 1px solid #000000;
+                width: 280px;
+                height: 300px;                
+                background-color: black; 
+                padding: 10px;                
+                position: absolute;
+                top: 80px;
+                left: 0px;
+                right: 0px;
+                margin: auto;        
+                
+            }
+            #displayFrame {
+                height: 50px;
+                width: 280px;
+                font-size: 40px;
+                text-align: right;
+                position: absolute;
+                left: 0px;
+                right: 0px;
+                margin: auto;
+                
+                
+            }
+            
+
+
+        </style>
+    </head>
     <body>
-        <h1>个人简介</h1>
-        <ul>
-            <li>学历</li>
-            <li>姓名</li>
-        </ul>
+        <div id="panel"> 
+            <input type="text" name="input" id="displayFrame" disabled="disabled"/>
+            <div  id="keyboard">
+                <button value="1" onclick="displayValue(this.value)">1</button>
+                <button value="2" onclick="displayValue(this.value)">2</button>
+                <button value="3" onclick="displayValue(this.value)">3</button>
+                <button value="4" onclick="displayValue(this.value)">4</button>
+                <button value="5" onclick="displayValue(this.value)">5</button>
+                <button value="6" onclick="displayValue(this.value)">6</button>
+                <button value="7" onclick="displayValue(this.value)">7</button>
+                <button value="8" onclick="displayValue(this.value)">8</button>
+                <button value="9" onclick="displayValue(this.value)">9</button>
+                <button value="0" onclick="displayValue(this.value)">0</button>
+                <button value="+" onclick="displayValue(this.value)">+</button>
+                <button value="-" onclick="displayValue(this.value)">-</button>
+                <button value="x" onclick="displayValue(this.value)">x</button>
+                <button value="/" onclick="displayValue(this.value)">/</button>
+                <button value="=" onclick="caculate()">=</button>
+                <button value="on/off" id="on-off" onclick="state()">on/off</button>
+                <button value="reset" onclick="reset()">reset</button>
+            </div>
+        
+        </div>
+        <script>
+        // git 哪里不会？在哪里输入你说的那些，好了
+        // git是命令行工具，
+        //好卡
+                //var buttons=["1","2","3","4","5","6","7","8","9","0","+","-","x","/","=","on/off","reset"];  
+        var flag = 1;
+        function displayValue(text) {
+            document.getElementById("displayFrame").value += text; 
+        }
+        function caculate() {
+            var arr = document.getElementById("displayFrame").value.split("");            
+            var i, z, j = 0, newArr = [];
+            var result;
+            newArr[0] = "";  
+            //重组显示数组        
+            for (i=0;i<arr.length;i++) {
+                if (!isNaN(arr[i])) {                      
+                    newArr[j] += arr[i];                    
+                }
+                else {
+                    newArr[j+1] = arr[i];                    
+                    newArr[j+2] = "";
+                    j = j + 2;
+                }                  
+            }
+            //alert(newArr);
+            //首先进行乘/除运算
+            for (z=0;z<newArr.length;z++) {               
+                while (newArr[z] == "x" || newArr[z] == "/") {
+                    if (newArr[z] == "x") {
+                        result = newArr[z-1] * newArr[z+1];                  
+                     }                    
+                    else {
+                        result = newArr[z-1] / newArr[z+1];
+                    }
+                    //alert(result)
+                    newArr.splice(z-1,3,result);
+                    //alert(newArr);
+                }  
+            }
+            //其次进行加/减运算
+            for (z=0;z<newArr.length;z++) {
+                while (newArr[z] == "+" || newArr[z] == "-") {
+                    if (newArr[z] == "+") {
+                        result = parseInt(newArr[z-1]) + parseInt(newArr[z+1]);                  
+                     }                    
+                    else {
+                        result = newArr[z-1] - newArr[z+1];
+                    }
+                    //alert(result)
+                    newArr.splice(z-1,3,result);
+                    //alert(newArr);
+                }                
+            }
+            //显示结果并检查
+            if (!isNaN(result)) {
+                document.getElementById("displayFrame").value = result;
+            }
+            else {
+                alert("请检查您的输入哦！")
+            }              
+        }
+        function state() {            
+            if (flag == 1) {
+                document.getElementById("displayFrame").removeAttribute('disabled','disabled');
+                document.getElementById("on-off").style.backgroundColor = "yellow";
+                flag = -1;
+            }
+            else {
+                document.getElementById("displayFrame").setAttribute('disabled','disabled');
+                document.getElementById("on-off").style.backgroundColor = "gray";
+                flag = 1;
+            }            
+        }
+        function reset() {
+            document.getElementById("displayFrame").value = 0;
+        }
+
+        </script>
     </body>
-</htmL>
+</html>
