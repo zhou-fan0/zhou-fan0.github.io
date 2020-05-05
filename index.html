@@ -75,6 +75,8 @@
             border-radius: 50%;
             background-color: seagreen;
             float: right;
+            font-size: 25px;
+            font-weight: 500;
         }
         .key:hover {
             background-color: rgb(190, 192, 100);
@@ -82,13 +84,16 @@
         }   
         .key:active {
             transform: translateY(1px);
+            box-shadow: 0px 0px 1px gray;
         }
         #on-off:active {
             transform: translateY(1px);
+            box-shadow: 0px 0px 1px gray;
         }   
         #reset:active {     
             background-color: rgb(68, 201, 126);       
-            transform: translateY(1px);            
+            transform: translateY(1px);    
+            box-shadow: 0px 0px 1px gray;        
         }
     </style>
 </head>
@@ -101,24 +106,24 @@
 
         <div id="keyboard">
             <button value="on/off" id="on-off" onclick="state()"></button>
-            <button value="reset" id="reset" onclick="reset()">c</button>
+            <button value="reset" id="reset" onclick="reset()">AC</button>
             <div id="numberKey">
                 <button class="key" value="1" onclick="displayValue(this.value)">1</button>
                 <button class="key" value="2" onclick="displayValue(this.value)">2</button>
                 <button class="key" value="3" onclick="displayValue(this.value)">3</button>
-                <button class="key" value="+" onclick="displayValue(this.value)">+</button>
+                <button class="key" value=" + " onclick="displayValue(this.value)">+</button>
                 <button class="key" value="4" onclick="displayValue(this.value)">4</button>
                 <button class="key" value="5" onclick="displayValue(this.value)">5</button>
                 <button class="key" value="6" onclick="displayValue(this.value)">6</button>
-                <button class="key" value="-" onclick="displayValue(this.value)">-</button>
+                <button class="key" value=" - " onclick="displayValue(this.value)">-</button>
                 <button class="key" value="7" onclick="displayValue(this.value)">7</button>
                 <button class="key" value="8" onclick="displayValue(this.value)">8</button>
                 <button class="key" value="9" onclick="displayValue(this.value)">9</button>
-                <button class="key" value="x" onclick="displayValue(this.value)">x</button>
+                <button class="key" value=" x " onclick="displayValue(this.value)">x</button>
                 <button class="key" value="." onclick="displayValue(this.value)">.</button>
                 <button class="key" value="0" onclick="displayValue(this.value)">0</button>
                 <button class="key" value="=" onclick="caculate()">=</button>
-                <button class="key" value="/" onclick="displayValue(this.value)">/</button>
+                <button class="key" value=" / " onclick="displayValue(this.value)">/</button>
             </div>       
         </div>
 
@@ -135,21 +140,8 @@
                 result = Number(str);
             }
             else {
-                var arr = str.split("");
-                var i, z, j = 0, newArr = [];
-                var result;
-                newArr[0] = "";
-                //重组显示数组        
-                for (i = 0; i < arr.length; i++) {
-                    if (!isNaN(arr[i]) || arr[i] == ".") {
-                        newArr[j] += arr[i];
-                    }
-                    else {
-                        newArr[j + 1] = arr[i];
-                        newArr[j + 2] = "";
-                        j = j + 2;
-                    }
-                }
+                var newArr = str.split(" "); //舍弃之前的僵硬分割法，在运算符两边加空格完成分割               
+
                 //首先进行乘/除运算
                 for (z = 0; z < newArr.length; z++) {
                     while (newArr[z] == "x" || newArr[z] == "/") {
