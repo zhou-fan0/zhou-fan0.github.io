@@ -1,204 +1,142 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>我的作品</title>
     <style type="text/css">
-        #panel {
-            border: 2px solid #000000;
-            width: 300px;
+        body {
+            background-image: url(雏菊.jpg);
+            background-size: cover;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            animation: frams 30s infinite;
+        }
+
+        @keyframes frams {
+            0% {
+                background-image: url(雏菊.jpg);
+                background-size: cover;
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+            }
+            33% {
+                background-image: url(海浪.jpg);
+                background-size: cover;
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+            }
+            66% {
+                background-image: url(梦幻.jpg);
+                background-size: cover;
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+            }
+            100% {
+                background-image: url(雏菊.jpg);
+                background-size: cover;
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+            }
+        }
+
+        div.container {
+            background-color: white;
+            opacity: 0.8;
             height: 500px;
-            background-color: rgb(255, 254, 183);
-            margin: auto;
-            padding: 10px;
-            border-radius: 15px;
-        }
-
-        #keyboard {            
-            width: 280px;
-            height: 300px;
-            background-color:rgb(255, 254, 183);
-            padding: 10px;
+            width: 1000px;
             position: absolute;
-            top: 210px;
-            left: 0px;
-            right: 0px;
-            margin: auto;            
-        }
-
-        #frame {
-            border: 2px solid #000000;
-            width: 283px;
-            height: 156px;
-            background-color: rgb(190, 192, 100);
-            position: absolute;
-            top: 40px;
+            top: 35px;
             left: 0px;
             right: 0px;
             margin: auto;
-            box-shadow: 4px 4px 1px rgb(140, 141, 82) inset;
-            border-radius: 5px;
+            padding: 0px;
+            box-shadow: 3px 3px 8px rgb(56, 55, 55);
         }
 
-        #displayFrame {
-            height: 150px;
-            width: 280px;
-            font-size: 40px;
-            text-align: right;
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            right: 0px;
-            margin: auto;
-            box-shadow: 2px 2px 1px rgb(254, 255, 176) inset;
-            background-color: rgb(235, 236, 129);
-            border-radius: 5px;
-        }
-        #numberKey {
-           padding-top: 10px;
+        div.header {
+            color: white;
+            width: 100%;
+            height: 100px;
+            padding: 25px;
         }
 
-        .key,#on-off,#reset {
-            border: 1.5px solid black;
-            box-shadow: 2px 2px 1px gray;            
-            height: 50px;
-            width: 66.4px;
-            font-size: 30px;
-            border-radius: 15%;
-            background-color: rgb(235, 236, 129);
-            outline: none;
+        div.col-4 {
+            text-align: center;
+            padding: 30px 30px 0px 50px;
+
         }
-        #on-off {
-            border-radius: 50%;
-            background-color: rgb(190, 79, 60);
+
+        div.col-8 {
+            padding: 30px 50px 0px 50px;
         }
-        #reset {
-            border-radius: 50%;
-            background-color: seagreen;
-            float: right;
-            font-size: 25px;
-            font-weight: 500;
-        }
-        .key:hover {
-            background-color: rgb(190, 192, 100);
-            
-        }   
-        .key:active {
-            transform: translateY(1px);
-            box-shadow: 0px 0px 1px gray;
-        }
-        #on-off:active {
-            transform: translateY(1px);
-            box-shadow: 0px 0px 1px gray;
-        }   
-        #reset:active {     
-            background-color: rgb(68, 201, 126);       
-            transform: translateY(1px);    
-            box-shadow: 0px 0px 1px gray;        
+
+        div.tab-content p {
+            line-height: 2;
         }
     </style>
 </head>
 
 <body>
-    <div id="panel">
-        <div id="frame">
-            <input type="text" name="input" id="displayFrame" value="" hidden="hidden" />
+    <div class="container">
+        <div class="header bg-secondary">
+            <h1><b>我的作品</b></h1>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="list-group" id="list-tab" role="tablist">
+                    <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list"
+                        href="#list-home" role="tab" aria-controls="home">简易计算器</a>
+                    <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
+                        href="#list-profile" role="tab" aria-controls="profile">作业管理系统</a>
+                    <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
+                        href="#list-messages" role="tab" aria-controls="messages">Messages</a>
+                    <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
+                        href="#list-settings" role="tab" aria-controls="settings">Settings</a>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="list-home" role="tabpanel"
+                        aria-labelledby="list-home-list">
+                        <h3>简介</h3>
+                        <p>该简易计算器基于html、css和javascript等基础知识实现了整数及小数的加、减、乘、除四则运算，包括运算优先级的设定，同时加入开关键模拟仿真计算器。</p>
+                        <a href="calculator.html" target="_blank">体验一下</a>
+                    </div>
+                    <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+                        <h3>简介</h3>
+                        <p>该作业管理系统是基于bootstrap构建，实现了发布作业和提交作业等操作，并能查看已发布和已提交的作业，帮助用户简单高效地管理作业。</p>
+                        <a href="作业管理系统.html" target="_blank">体验一下</a>
+                    </div>
+                    <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+                        ...</div>
+                    <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
+                        ...</div>
+                </div>
+            </div>
         </div>
 
-        <div id="keyboard">
-            <button value="on/off" id="on-off" onclick="state()"></button>
-            <button value="reset" id="reset" onclick="reset()">AC</button>
-            <div id="numberKey">
-                <button class="key" value="1" onclick="displayValue(this.value)">1</button>
-                <button class="key" value="2" onclick="displayValue(this.value)">2</button>
-                <button class="key" value="3" onclick="displayValue(this.value)">3</button>
-                <button class="key" value=" + " onclick="displayValue(this.value)">+</button>
-                <button class="key" value="4" onclick="displayValue(this.value)">4</button>
-                <button class="key" value="5" onclick="displayValue(this.value)">5</button>
-                <button class="key" value="6" onclick="displayValue(this.value)">6</button>
-                <button class="key" value=" - " onclick="displayValue(this.value)">-</button>
-                <button class="key" value="7" onclick="displayValue(this.value)">7</button>
-                <button class="key" value="8" onclick="displayValue(this.value)">8</button>
-                <button class="key" value="9" onclick="displayValue(this.value)">9</button>
-                <button class="key" value=" x " onclick="displayValue(this.value)">x</button>
-                <button class="key" value="." onclick="displayValue(this.value)">.</button>
-                <button class="key" value="0" onclick="displayValue(this.value)">0</button>
-                <button class="key" value="=" onclick="caculate()">=</button>
-                <button class="key" value=" / " onclick="displayValue(this.value)">/</button>
-            </div>       
-        </div>
 
-    </div>
-    <script>
-        //var buttons=["1","2","3","4","5","6","7","8","9","0","+","-","x","/","=","on/off","reset"];  
-        var flag = 1;
-        function displayValue(text) {
-            document.getElementById("displayFrame").value += text;
-        }
-        function caculate() {
-            var str = document.getElementById("displayFrame").value;
-            if (!isNaN(Number(str))) {
-                result = Number(str);
-            }
-            else {
-                var newArr = str.split(" "); //舍弃之前的僵硬分割法，在运算符两边加空格完成分割               
 
-                //首先进行乘/除运算
-                for (z = 0; z < newArr.length; z++) {
-                    while (newArr[z] == "x" || newArr[z] == "/") {
-                        if (newArr[z] == "x") {
-                            result = newArr[z - 1] * newArr[z + 1];
-                        }
-                        else {
-                            result = newArr[z - 1] / newArr[z + 1];
-                        }
-                        //alert(result)
-                        newArr.splice(z - 1, 3, result);
-                        //alert(newArr);
-                    }
-                }
-                //其次进行加/减运算
-                for (z = 0; z < newArr.length; z++) {
-                    while (newArr[z] == "+" || newArr[z] == "-") {
-                        if (newArr[z] == "+") {
-                            result = Number(newArr[z - 1]) + Number(newArr[z + 1]);
-                        }
-                        else {
-                            result = newArr[z - 1] - newArr[z + 1];
-                        }
-                        //alert(result)
-                        newArr.splice(z - 1, 3, result);
-                        //alert(newArr);
-                    }
-                }
-            }
-            //显示结果并检查
-            if (!isNaN(result)) {
-                document.getElementById("displayFrame").value = result;
-            }
-            else {
-                alert("请检查您的输入哦！")
-            }
-        }
-        function state() {
-            document.getElementById("displayFrame").value = "";
-            if (flag == 1) {
-                //document.getElementById("displayFrame").removeAttribute('disabled', 'disabled');
-                document.getElementById("displayFrame").removeAttribute('hidden');                
-                document.getElementById("on-off").style.backgroundColor = "rgb(232,0,0)";
-                flag = -1;
-            }
-            else {
-                //document.getElementById("displayFrame").setAttribute('disabled', 'disabled');
-                document.getElementById("displayFrame").setAttribute('hidden', true);
-                document.getElementById("on-off").style.backgroundColor = "rgb(190, 79, 60)";
-                flag = 1;
-            }
-        }
-        function reset() {                      
-            document.getElementById("displayFrame").value = "";            
-        }
 
-    </script>
+
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>
