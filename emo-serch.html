@@ -1,13 +1,26 @@
-xmlhttp.open("GET", "/data/emojils.json")
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
 
-function showHint() {
-     var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
+<body>
+    <p id="display"></p>
+    <script>
+        var doc;
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
+                doc = JSON.parse(this.responseText);
+                document.getElementById("display").innerHTML = doc;
             }
         };
-        xmlhttp.open("GET", "/data/emojils.json");
+        xmlhttp.open("GET", "/data/emojils.json", true);
         xmlhttp.send();
-    }
+    </script>
+</body>
+
+</html>
