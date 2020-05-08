@@ -24,7 +24,7 @@
                 doc = JSON.parse(xmlhttp.responseText);            
                 for (i=0;i<10;i++) {
                     console.log(Object.keys(doc)[i])                    
-                    text = text + "<img src=" + doc[Object.keys(doc)[i]] + "alt=" + Object.keys(doc)[i] +"></img>";
+                    text = text + "<img src=" + doc[Object.keys(doc)[i]] + "alt=" + Object.keys(doc)[i] + "></img>";
                 }
             }
             document.getElementById("display").innerHTML =text;
@@ -40,8 +40,8 @@
                 var searchName = name.filter(ele => ele.indexOf(document.getElementById("imageName").value) != -1); 
                 var text1 = "";
                 for (j=0;j<10;j++) {
-                    text1 = text1 + "<li><img src=" + doc[searchName] + "ait=" + name[j] + "></img></li><br>";
-                }
+                    text1 = text1 + "<li><img src=" + doc[searchName[j]] + "ait=" + name[j] + "></img></li><br>";
+                }                
                 document.getElementById("imgHint").innerHTML = text1;
             }
         }
