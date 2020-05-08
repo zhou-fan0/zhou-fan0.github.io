@@ -16,7 +16,7 @@
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 doc = JSON.parse.responseText;            
-                for (i=0;i<10,i++) {
+                for (i=0;i<10;i++) {
                     text = text + "<img src=" + doc.values(i) + "alt=" + doc.keys(i) +"></img>"
                 }
             }
