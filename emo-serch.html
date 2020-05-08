@@ -12,36 +12,39 @@
     <div id="display"></div>
     <h3>请在下面输入框中输入图片名：</h3>
     <form action="">
-        图片名：<input type="text" id="imageName" onkeyup="showHint(this.value)"/>
+        图片名：<input type="text" id="imageName" onkeyup="showHint(this.value)" />
     </form>
-    <p>建议：<ul id="imgHint"></ul></p>
+    <p>建议：<ul id="imgHint"></ul>
+    </p>
     <script>
-        var doc;
-        var text = '';
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                doc = JSON.parse(xmlhttp.responseText);            
-                for (i=0;i<10;i++) {
-                    console.log(Object.keys(doc)[i])                    
-                    text = text + "<img src=" + doc[Object.keys(doc)[i]] + "alt=" + Object.keys(doc)[i] + "></img>";
+        function getImage() {
+            var doc;            
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    doc = JSON.parse(xmlhttp.responseText);                    
                 }
-            }
-            document.getElementById("display").innerHTML =text;
-        };
-        xmlhttp.open("GET", "/data/emojils.json", true);
-        xmlhttp.send();
+            };
+            xmlhttp.open("GET", "/data/emojils.json", true);
+            xmlhttp.send();      
+            return doc;      
+        }
+        var text = '';
+        for (i = 0; i < 10; i++) {            
+            text = text + "<img src=" + doc[Object.keys(getImage())[i]] + "alt=" + Object.keys(getImage())[i] + "></img>";
+        }
+        document.getElementById("display").innerHTML = text;
         function showHint(str) {
             if (str.length == 0) {
                 document.getElementById("imgHint").innerHTML = "";
                 return
             } else {
-                var name = Object.keys(doc);
-                var searchName = name.filter(ele => ele.indexOf(document.getElementById("imageName").value) != -1); 
+                var name = Object.keys(getImage());
+                var searchName = name.filter(ele => ele.indexOf(document.getElementById("imageName").value) != -1);
                 var text1 = "";
-                for (j=0;j<10;j++) {
-                    text1 = text1 + "<li><img src=" + doc[searchName[j]] + "ait=" + name[j] + "></img></li><br>";
-                }                
+                for (j = 0; j < 10; j++) {
+                    text1 = text1 + "<li><img src=" + doc[searchName[j]] + "ait=" + searchName[j] + "></img></li><br>";
+                }
                 document.getElementById("imgHint").innerHTML = text1;
             }
         }
