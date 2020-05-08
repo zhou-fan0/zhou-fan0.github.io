@@ -17,7 +17,8 @@
             if (this.readyState == 4 && this.status == 200) {
                 doc = JSON.parse(responseText);            
                 for (i=0;i<10;i++) {
-                    text = text + "<img src=" + Object.values(doc)[i] + "alt=" + Object.keys(doc)[i] +"></img><br>"
+                    console.log(Object.keys(doc)[i])
+                    text = text + "<img src=" + doc[Object.keys(doc)[i]] + "alt=" + Object.keys(doc)[i] +"></img><br>"
                 }
             }
             document.getElementById("display").innerHTML =text;
