@@ -8,7 +8,13 @@
 </head>
 
 <body>
+    <h3>前十张照片：</h3>
     <div id="display"></div>
+    <h3>请在下面输入框中输入图片名：</h3>
+    <form action="">
+        图片名：<input type="text" id="imageName" onkeyup="showHint(this.value)"/>
+    </form>
+    <p>建议：<ul id="imgHint"></ul></p>
     <script>
         var doc;
         var text = '';
@@ -18,13 +24,30 @@
                 doc = JSON.parse(xmlhttp.responseText);            
                 for (i=0;i<10;i++) {
                     console.log(Object.keys(doc)[i])                    
-                    text = text + "<img src=" + doc[Object.keys(doc)[i]] + "alt=" + Object.keys(doc)[i] +"></img><br>"
+                    text = text + "<img src=" + doc[Object.keys(doc)[i]] + "alt=" + Object.keys(doc)[i] +"></img>";
                 }
             }
             document.getElementById("display").innerHTML =text;
         };
         xmlhttp.open("GET", "/data/emojils.json", true);
         xmlhttp.send();
+        function showHint(str) {
+            if (str.length == 0) {
+                document.getElementById("imgHint").innerHTML = "";
+                return
+            } else {
+                var name = Object.keys(doc);
+                var searchName = name.filter(ele => ele.indexOf(document.getElementById("imageName").value) != -1); 
+                var text1 = "";
+                for (j=0;j<10;j++) {
+                    text1 = text1 + "<li><img src=" + doc[searchName] + "ait=" + name[j] + "></img></li><br>";
+                }
+                document.getElementById("imgHint").innerHTML = text1;
+            }
+        }
+        function findAll(str) {
+            if 
+        }
     </script>
 </body>
 
