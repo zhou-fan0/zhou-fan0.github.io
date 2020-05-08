@@ -8,15 +8,19 @@
 </head>
 
 <body>
-    <p id="display"></p>
+    <div id="display"></div>
     <script>
         var doc;
+        var text = '';
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                doc = this.responseText;
-                document.getElementById("display").innerHTML = doc;
+                doc = JSON.parse.responseText;            
+                for (i=0;i<10,i++) {
+                    text = text + "<img src=" + doc.values(i) + "alt=" + doc.keys(i) +"></img>"
+                }
             }
+            document.getElementById("display").innerHTML =text;
         };
         xmlhttp.open("GET", "/data/emojils.json", true);
         xmlhttp.send();
