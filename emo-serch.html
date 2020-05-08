@@ -14,7 +14,7 @@
     <form action="">
         图片名：<input type="text" id="imageName" onkeyup="showHint(this.value)" />
     </form>
-    <p>建议：<ul id="imgHint"></ul>
+    <p>建议：<ul id="imgHint" style="list-style-type: none;"></ul>
     </p>
     <script>
         function getImage() {
@@ -30,8 +30,9 @@
             return doc;      
         }
         var text = '';
-        for (i = 0; i < 10; i++) {            
-            text = text + "<img src=" + doc[Object.keys(getImage())[i]] + "alt=" + Object.keys(getImage())[i] + "></img>";
+        for (i = 0; i < 10; i++) {    
+            allImage = getImage();        
+            text = text + "<img src=" + allImage[Object.keys(allImage)[i]] + "alt=" + Object.keys(allImage)[i] + "></img>";
         }
         document.getElementById("display").innerHTML = text;
         function showHint(str) {
