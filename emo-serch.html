@@ -17,8 +17,7 @@
             if (this.readyState == 4 && this.status == 200) {
                 doc = JSON.parse(xmlhttp.responseText);            
                 for (i=0;i<10;i++) {
-                    console.log(Object.keys(doc)[i])
-                    onsole.log(Object.values(doc)[i])
+                    console.log(Object.keys(doc)[i])                    
                     text = text + "<img src=" + doc[Object.keys(doc)[i]] + "alt=" + Object.keys(doc)[i] +"></img><br>"
                 }
             }
