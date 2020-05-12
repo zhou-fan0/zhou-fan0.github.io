@@ -33,14 +33,13 @@
         xmlhttp.send();
         function showHint(str) {
             if (str.length == 0) {
-                document.getElementById("imgHint").innerHTML = "";
-                return
+                document.getElementById("imgHint").innerHTML = "";            
             } else {
                 var name = Object.keys(doc);
-                var searchName = name.filter(ele => ele.indexOf(document.getElementById("imageName").value) != -1); 
+                var searchName = name.filter(ele => ele.indexOf(str) != -1); 
                 var text1 = "";
                 for (j=0;j<10;j++) {
-                    text1 = text1 + "<li><img src=" + doc[searchName[j]] + "ait=" + name[j] + "></img></li><br>";
+                    text1 = text1 + "<li><img src=" + doc[searchName[j]] + "alt=" + name[j] + "></img></li><br>";
                 }                
                 document.getElementById("imgHint").innerHTML = text1;
             }
