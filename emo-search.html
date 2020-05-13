@@ -29,7 +29,8 @@
             padding-top: 20px;
         }
 
-        #container, #display {
+        #container,
+        #display {
             background-color: rgb(185, 143, 224);
             position: fixed;
             top: 15%;
@@ -38,7 +39,8 @@
             display: block;
         }
 
-        #searchName, #anotherSearchName {
+        #searchName,
+        #anotherSearchName {
             height: 70px;
             width: 500px;
             border-radius: 50px;
@@ -100,14 +102,15 @@
         }
 
         #anotherSearchFrame {
-            padding: 12px;
+            padding: 22px;
+            padding-bottom: 0px;
         }
 
         #anotherSearchName {
             background-color: white;
             border-color: rgb(118, 71, 163);
             height: 30px;
-            top: 10px;
+            top: 20px;
             left: 130px;
             margin: 0px;
             font-size: 20px;
@@ -119,35 +122,48 @@
         }
 
         #imgHint {
-
+            padding: 22px;
+            height: 430px;
         }
-    
+
         .card {
-            background-color: white;  
-            border: 1px solid rgb(199, 165, 231);          
+            background-color: white;
+            border: 1px solid rgb(199, 165, 231);
             float: left;
             margin: 0px;
             width: 130px;
             height: 100px;
         }
 
-        .image, .imageName {
+        .image,
+        .imageName {
             margin: auto;
         }
-        #pageNav {
-            position: relative;
-            bottom: 0px;           
-            margin: auto;
+
+        .image {
+            height: 64px;
+            width: 64px;
         }
+
         .eachPageImgHint {
-            overflow: scroll;
+            overflow: hidden;
+            display: none;
         }
+
         .card:hover {
-            background-color: rgb(185, 143, 224);            
-            
+            background-color: rgb(185, 143, 224);
+
         }
+
         .card:active {
             border: 1px solid rgb(118, 71, 163);
+        }
+
+        #pageNav {
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            margin: auto;
         }
     </style>
 </head>
@@ -168,27 +184,12 @@
         <form id="anotherSearchFrame">
             请输入图标名：<input type="text" id="anotherSearchName" autofocus="autofocus" onkeyup="showHint(this.value)" />
         </form>
-        <div id="imgHint">
-            <nav aria-label="Page navigation example" id="pageNav">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#page1">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#page2">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#page3">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <div id="imgHint"></div>
+        <div id="pageNav"></div>
     </div>
+    
     <script>
+        //加载所有图标
         let doc;
         let xmlhttp = new XMLHttpRequest();
         let imgNames, images;
@@ -203,47 +204,58 @@
         };
         xmlhttp.open("GET", "/data/emojils.json", true);
         xmlhttp.send();
+
+        //首页点击搜索图标之后更改页面展示
         function showImg() {
             document.getElementById("container").style.display = "none";
             document.getElementById("display").style.display = "block";
             document.getElementById("anotherSearchName").value = document.getElementById("searchName").value;
         }
 
+        //点击页码后，显示对应页的内容
+        function controlPage(i) {
+            nodes = document.getElementsByClassName("eachPageImgHint");
+            Array.prototype.forEach.call(nodes, function (node) { node.style.display = "none" });
+            nodes[i - 1].style.display = "block";
+        }
+
+        //在搜索框输入图标名，展示对应的图标
         function showHint(str) {
             document.getElementById("imgHint").innerHTML = "";
-            let num = 39;
+            document.getElementById("pageNav").innerHTML = "";
+            let num = 40;
             if (doc) {
                 if (str.length == 0) {
                     document.getElementById("imgHint").innerHTML = "";
                 } else {
                     let searchNames = imgNames.filter(ele => ele.startsWith(str));
-                    //alert(searchNames.length)
-                    //alert(Math.ceil(searchNames.length/num))
                     if (searchNames.length != 0) {
                         for (let i = 1; i <= Math.ceil(searchNames.length / num); i++) {
-                            if (i == 1) {
-                                eachPageNames = searchNames.slice(0, num + 1);                 
-                                eachPageImgHint = document.createElement("div");
-                                eachPageImgHint.className = "eachPageImgHint";
-                                eachPageImgHint.id = "page" + i;
-                                document.getElementById("imgHint").appendChild(eachPageImgHint);  
-                                eachPageNames.map(ele => document.getElementsByClassName("eachPageImgHint")[0].appendChild(displayImg(ele)));                        
-                            }
-                            else {
-                                eachPageNames = searchNames.slice((i - 1) * num + 1, i * num + 1);                                
-                                eachPageImgHint = document.createElement("div");
-                                eachPageImgHint.className = "eachPageImgHint";
-                                eachPageImgHint.id = "page" + i;
-                                document.getElementById("imgHint").appendChild(eachPageImgHint);                
-                                eachPageNames.map(ele => document.getElementsByClassName("eachPageImgHint")[i-1].appendChild(displayImg(ele)));
-                            }
+                            eachPageNames = searchNames.slice((i - 1) * num, i * num);
+                            eachPageImgHint = document.createElement("div");
+                            eachPageImgHint.className = "eachPageImgHint";
+                            eachPageImgHint.id = "page" + i;
+                            document.getElementById("imgHint").appendChild(eachPageImgHint);
+                            eachPageNames.map(ele => document.getElementsByClassName("eachPageImgHint")[i - 1].appendChild(displayImg(ele)));
+                            document.getElementById("page1").style.display = "block";
+                            page = document.createElement("button");
+                            page.className = "pageButton";
+                            page.addEventListener("click", function () { controlPage(i) });
+                            pageNum = document.createTextNode(i);
+                            page.appendChild(pageNum);
+                            document.getElementById("pageNav").appendChild(page);
                         }
-                    } else {
+                    }
+                    else {
                         document.getElementById("imgHint").innerHTML = "咦?怎么什么都没找到~ 0_0||";
                     }
                 }
+
+
             }
         }
+
+        //展示每张图片
         function displayImg(name) {
             if (doc) {
                 let imageCard = document.createElement("div");
@@ -256,10 +268,11 @@
                 let imageName = document.createElement("p");
                 imageName.className = "imageName";
                 imageName.appendChild(document.createTextNode(name));
-                imageCard.appendChild(imageName);  
-                return imageCard                          
-            }               
+                imageCard.appendChild(imageName);
+                return imageCard
+            }
         }
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
