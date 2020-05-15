@@ -9,39 +9,52 @@
     <title>非凡图标库</title>
     <style type="text/css">
         body {
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            height: 100%;
-            width: 100%;
-            margin: 0px;
+            padding: 0;          
+            margin: 0;
+            overflow: auto;
         }
 
         #header {
             color: white;
             background-color: rgb(118, 71, 163);
-            position: fixed;
+            position: absolute;
             top: 0px;
             left: 0px;
             height: 15%;
             width: 100%;
-            padding-left: 40px;
-            padding-top: 20px;
+            padding-left: 2%;            
+            display: flex;
+            align-items: center;            
         }
 
-        #container,
-        #display {
+        #container, #display {
             background-color: rgb(185, 143, 224);
-            position: fixed;
+            position: absolute;
             top: 15%;
-            height: 100%;
+            height: 85%;
             width: 100%;
             display: block;
+            
+        }
+
+        #searchFrame {
+            height: 10%;
+            width: 45%;
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-left: 4%;
         }
 
         #searchName,
         #anotherSearchName {
-            height: 70px;
+            height: 75px;
             width: 500px;
             border-radius: 50px;
             border: 2px solid white;
@@ -49,21 +62,20 @@
             background-color: rgb(118, 71, 163);
             font-size: 25px;
             color: white;
-            text-align: center;
-            position: absolute;
-            top: 210px;
-            left: 0px;
-            right: 0px;
-            margin: auto;
+            text-align: center;  
+            margin-right: 1.5%;         
+      
         }
 
-        #heart {
+        #heart {            
             max-height: 80px;
-            position: absolute;
-            top: 100px;
+            margin-top: 10%;            
+            /*
+            position: absolute;            
             left: 0px;
             right: 0px;
             margin: auto;
+            */
         }
 
         ::-webkit-input-placeholder {
@@ -88,11 +100,10 @@
         }
 
         #glass1 {
-            height: 50px;
-            position: absolute;
-            top: 220px;
-            left: 950px;
+            max-height: 65px;
+            float: right;
         }
+                                
 
         #display {
             background-color: white;
@@ -143,6 +154,7 @@
         .image {
             height: 64px;
             width: 64px;
+            opacity: 1;
         }
 
         .eachPageImgHint {
@@ -151,9 +163,10 @@
         }
 
         .card:hover {
-            background-color: rgb(185, 143, 224);
+            background-color: rgb(118, 71, 163);            
 
         }
+
 
         .card:active {
             border: 1px solid rgb(118, 71, 163);
@@ -165,36 +178,55 @@
             right: 0px;
             margin: auto;
         }
+
+        .starImg,
+        .downloadImg {
+            height: 20px;
+            width: 20px;
+            position: absolute;
+            top: 5px;
+            display: none;
+        }
+
+        .starImg {
+            left: 5px;
+        }
+
+        .downloadImg {
+            right: 5px;
+        }
     </style>
 </head>
 
 <body>
-    <div id="header">
+    <div id="header" class="">
         <h1>非凡图标库</h1>
+        <button type="button" class="btn btn-outline-light rounded-pill" style="margin-right: 5px; float: right;">登录</button>
+        <button type="button" class="btn btn-light rounded-pill" id="signup">注册</button>
     </div>
-    <div id="container" display="block">
-        <img src="./icons/爱心.svg" alt="我爱你" id="heart" display="block">
+    <div id="container"  class="" display="block">
+        <img src="./icons/爱心.svg" alt="我爱你" id="heart" class="img-fluid mx-auto d-block" display="block">
         <form id="searchFrame">
             <input type="text" id="searchName" placeholder="1,799 icons" onkeyup="showHint(this.value)" />
-        </form>
-        <img src="./icons/放大镜-深.svg" alt="放大镜" id="glass1" onclick="showImg()" />
+            <img src="./icons/放大镜-深.svg" alt="放大镜" id="glass1" onclick="showImg()" />
+        </form>        
     </div>
 
-    <div id="display">
+    <div id="display" class="">
         <form id="anotherSearchFrame">
             请输入图标名：<input type="text" id="anotherSearchName" autofocus="autofocus" onkeyup="showHint(this.value)" />
         </form>
         <div id="imgHint"></div>
         <div id="pageNav"></div>
     </div>
-    
+
     <script>
         //加载所有图标
         let doc;
         let xmlhttp = new XMLHttpRequest();
         let imgNames, images;
         let searchNames;
-        let eachPageNames;
+        let eachPageNames = [];
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 doc = JSON.parse(xmlhttp.responseText);
@@ -212,8 +244,12 @@
             document.getElementById("anotherSearchName").value = document.getElementById("searchName").value;
         }
 
-        //点击页码后，显示对应页的内容
+        //点击页码后，加载并显示对应页的内容
         function controlPage(i) {
+            if (!document.getElementById("page" + i).innerHTML) {
+                console.log(document.getElementById("page" + i).innerHTML)
+                eachPageNames[i - 1].map(ele => document.getElementsByClassName("eachPageImgHint")[i - 1].appendChild(displayImg(ele)));
+            }
             nodes = document.getElementsByClassName("eachPageImgHint");
             Array.prototype.forEach.call(nodes, function (node) { node.style.display = "none" });
             nodes[i - 1].style.display = "block";
@@ -231,13 +267,13 @@
                     let searchNames = imgNames.filter(ele => ele.startsWith(str));
                     if (searchNames.length != 0) {
                         for (let i = 1; i <= Math.ceil(searchNames.length / num); i++) {
-                            eachPageNames = searchNames.slice((i - 1) * num, i * num);
+                            eachPageNames[i - 1] = searchNames.slice((i - 1) * num, i * num);
+                            //console.log(eachPageNames[i-1]);
                             eachPageImgHint = document.createElement("div");
                             eachPageImgHint.className = "eachPageImgHint";
                             eachPageImgHint.id = "page" + i;
                             document.getElementById("imgHint").appendChild(eachPageImgHint);
-                            eachPageNames.map(ele => document.getElementsByClassName("eachPageImgHint")[i - 1].appendChild(displayImg(ele)));
-                            document.getElementById("page1").style.display = "block";
+                            //创建分页按钮
                             page = document.createElement("button");
                             page.className = "pageButton";
                             page.addEventListener("click", function () { controlPage(i) });
@@ -245,13 +281,13 @@
                             page.appendChild(pageNum);
                             document.getElementById("pageNav").appendChild(page);
                         }
+                        eachPageNames[0].map(ele => document.getElementsByClassName("eachPageImgHint")[0].appendChild(displayImg(ele)));
+                        document.getElementById("page1").style.display = "block";
                     }
                     else {
                         document.getElementById("imgHint").innerHTML = "咦?怎么什么都没找到~ 0_0||";
                     }
                 }
-
-
             }
         }
 
@@ -269,9 +305,29 @@
                 imageName.className = "imageName";
                 imageName.appendChild(document.createTextNode(name));
                 imageCard.appendChild(imageName);
+                starImg = document.createElement("img");
+                downloadImg = document.createElement("img");
+                starImg.src = "./icons/star1.svg";
+                starImg.className = "starImg";
+                downloadImg.src = "./icons/download.svg";
+                downloadImg.className = "downloadImg";
+                imageCard.appendChild(starImg);
+                imageCard.appendChild(downloadImg);
+                imageCard.addEventListener("mouseover", change(imageCard));
+
                 return imageCard
             }
         }
+
+        function change(node) {
+            console.log(node);
+            node.childNodes[0].style.opacity = "1";
+            starImg.style.display = "block";
+            downloadImg.style.display = "block";
+            starImg.addEventListener("click", function () { starImg.src = "./icons/star2.svg" });
+            downloadImg.addEventListener("click", function () { downloadImg.style.color = "7647A3" });
+        }
+
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js"
